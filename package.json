@@ -2,5 +2,25 @@
   "name": "component-generator",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run test",
+    "build": "babel src --out-dir dist --copy-files",
+    "test": "jest"
+  },
+  "dependencies": {
+    "chalk": "^2.2.0",
+    "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.57.3",
+    "jest": "^21.2.1"
+  },
+  "jest": {
+    "verbose": true,
+    "bail": false
+  }
 }

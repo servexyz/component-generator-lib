@@ -13,6 +13,7 @@ function generator(
     log(`Dir: ${dir}`);
     try {
       let files: Array<string> = createFiles(fileStructure, c, dir);
+      log(`files in generator: ${files}`);
       return files;
     } catch (error) {
       console.error(
@@ -75,4 +76,9 @@ function grabValueOfKeyFromObject(
   }
 }
 
-module.exports = generator;
+module.exports = {
+  generator,
+  createDirectory,
+  createFile,
+  createFiles
+};

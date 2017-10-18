@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run test",
+    "build": "babel src --out-dir dist --copy-files",
+    "test": "jest"
+  },
   "dependencies": {
     "chalk": "^2.2.0",
     "mkdirp": "^0.5.1"
@@ -16,7 +21,6 @@
   },
   "jest": {
     "verbose": true,
-    "bail": false,
-    "testPathIgnoreFiles": ["/node_modules"]
+    "bail": false
   }
 }

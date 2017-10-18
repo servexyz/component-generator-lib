@@ -7,19 +7,10 @@ const chalk = require("chalk");
 const log = console.log;
 
 function getTemplatedFileNames(preferredFileStructure = "solo-test-lazy") {
-  log(
-    `${chalk.blue(
-      "preferredFileStructure in gtfn()"
-    )}': ${preferredFileStructure}`
-  );
   let formatConfig = path.join(__dirname, "../format.json");
   let formatObject = require(formatConfig);
   let structure = formatObject.structure;
-  let templatedFileNames = grabValueOfKeyFromObject(
-    preferredFileStructure,
-    structure
-  );
-  log(`tfn from getTemplatedFileNames: ${templatedFileNames}`);
+  let templatedFileNames = grabValueOfKeyFromObject(preferredFileStructure, structure);
   return templatedFileNames;
 }
 
@@ -30,29 +21,25 @@ function generator(components, fileStructure = "solo-test-lazy") {
       let files = createFiles(fileStructure, c, dir);
       return files;
     } catch (error) {
-      console.error(
-        `${chalk.red("createFiles in generator failed.")} ${error}`
-      );
+      console.error(`${chalk.red("createFiles in generator failed.")} ${error}`);
     }
   });
 }
+
 function createDirectory(component) {
   mkdirp(component, err => {
-    err
-      ? console.error(`Failed to createDirectory. ${err}`)
-      : log(`${component}`);
+    err ? console.error(`${chalk.red("Failed to createDirectory()")}: ${err}`) : log(`${component}`);
   });
   return component;
 }
+
 function createFile(component) {
   fs.writeFile(component, "", "utf-8", error => {
-    error
-      ? console.error(`createFile() failed. ${error}`)
-      : log(`${component} was created`);
+    error ? console.error(`${chalk.red("createFile() failed.")}:  ${error}`) : log(`${component} was created`);
   });
 }
-
 function createFiles(preferredFileStructure, component, directory) {
+  let directoryInQuestion = path.join(__dirname, directory);
   let templatedFileNames = getTemplatedFileNames(preferredFileStructure);
   let createdFiles = [];
   if (templatedFileNames) {
@@ -62,14 +49,9 @@ function createFiles(preferredFileStructure, component, directory) {
       let here = path.join(process.cwd(), directory, file);
       createFile(here);
     });
-    log(`files in createFiles: ${files}`);
     return createdFiles;
   } else {
-    console.log(
-      `${chalk.red(
-        "templatedFileNames isn't defined. Current value: "
-      )} ${templatedFileNames}`
-    );
+    console.error(`${chalk.red("templatedFileNames is falsey. Current value: ")} ${templatedFileNames}`);
     return false;
   }
 }
@@ -80,11 +62,21 @@ function grabValueOfKeyFromObject(key, obj) {
     }
   }
 }
+function deleteFiles(directory) {
+  fs.readdir(directory, (rr, files) => {
+    if (err) throw error;
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw error;
+      });
+    }
+  });
+}
 
 module.exports = {
   generator,
   createDirectory,
   createFile,
   createFiles,
-  blah
+  deleteFiles
 };

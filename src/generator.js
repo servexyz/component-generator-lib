@@ -81,8 +81,8 @@ function grabValueOfKeyFromObject(
     }
   }
 }
-function deleteFiles(directory): boolean {
-  fs.readdir(directory, (rr, files) => {
+function deleteFiles(directory) {
+  fs.readdir(directory, (err, files) => {
     if (err) throw error;
     for (const file of files) {
       fs.unlink(path.join(directory, file), err => {

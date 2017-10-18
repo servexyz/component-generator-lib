@@ -12,5 +12,5 @@ test("createFiles should return 3 files", () => {
   expect(String(createdFiles)).toBe(String(expectedFiles));
   let deleteDirectory = path.join(__dirname, "../", directory);
   log(`Delete directory: ${deleteDirectory}`);
-  // deleteFiles(deleteDirectory);
+  deleteFiles(deleteDirectory);
 });

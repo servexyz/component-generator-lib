@@ -63,7 +63,7 @@ function grabValueOfKeyFromObject(key, obj) {
   }
 }
 function deleteFiles(directory) {
-  fs.readdir(directory, (rr, files) => {
+  fs.readdir(directory, (err, files) => {
     if (err) throw error;
     for (const file of files) {
       fs.unlink(path.join(directory, file), err => {

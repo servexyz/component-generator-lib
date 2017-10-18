@@ -1,0 +1,20 @@
+{
+  "structure": {
+    "solo": ["Component.js"],
+    "solo-test": ["Component.js", "Component.test.js"],
+    "solo-test-lazy": ["Component.js", "Component.test.js", "index.js"],
+    "solo-test-style": ["Component.js", "Component.test.js", "Component.css"],
+    "solo-test-style-lazy": [
+      "Component.js",
+      "Component.test.js",
+      "Component.css",
+      "index.js"
+    ]
+  },
+  "extensions": {
+    "vanilla": { "$js": "js", "$css": "css" },
+    "js-scss": { "$js": "js", "$css": "css" },
+    "jsx": { "$js": "jsx", "$css": "css" },
+    "jsx-scss": { "$js": "js", "$css": "css" }
+  }
+}

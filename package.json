@@ -16,6 +16,7 @@
   },
   "jest": {
     "verbose": true,
+    "bail": false,
     "testPathIgnoreFiles": ["/node_modules"]
   }
 }

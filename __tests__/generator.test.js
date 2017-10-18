@@ -4,12 +4,12 @@ test("createFiles should return 3 files", () => {
   const { createFiles, blah } = require("../dist/generator");
   let component = "Foo";
   let structure = "solo-test-lazy";
-  let expectedFiles = ["Foo.js", "Foo.test.js", "index.js"];
+  let expectedFiles: Array<string> = ["Foo.js", "Foo.test.js", "index.js"];
   let directory = "deleteMe";
   let createdFiles = createFiles(structure, component, directory);
-  log(`Created files: ${createdFiles}`);
-  blah();
-  expect(createdFiles).toBe(expectedFiles);
+  log(`typeof createdFiles: ${typeof createdFiles}`);
+  log(`typeof expectedFiles: ${typeof expectedFiles}`);
+  expect(String(createdFiles)).toBe(String(expectedFiles));
 });
 
 // test("module should export generator", () => {

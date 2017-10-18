@@ -7,52 +7,24 @@ const log = console.log;
 function getTemplatedFileNames(
   preferredFileStructure: string = "solo-test-lazy"
 ) {
-  log(`Dirname: ${__dirname}`);
-  log(`Filename: ${__filename}`);
-  log(
-    `${chalk.blue(
-      "preferredFileStructure in gtfn()"
-    )}': ${preferredFileStructure}`
-  );
   let formatConfig: string = path.join(__dirname, "../format.json");
-  log(`Format config in getTFN: ${formatConfig}`);
   let formatObject: mixed = require(formatConfig);
   let structure = formatObject.structure;
-  log(`Structure from getTemplatedFileNames: ${JSON.stringify(structure)}`);
   let templatedFileNames = grabValueOfKeyFromObject(
     preferredFileStructure,
     structure
   );
-  log(`tfn from getTemplatedFileNames: ${templatedFileNames}`);
   return templatedFileNames;
 }
 
-function blah() {
-  let preferredFileStructure = "solo-test-lazy";
-  let formatConfig: string = path.join(__dirname, "../format.json");
-  log(`Format config in blah: ${formatConfig}`);
-  log(`Dirname: ${__dirname}`);
-  log(`Filename: ${__filename}`);
-  let formatObject: mixed = require(formatConfig);
-  // log(`${chalk.green("formatConfig")}: ${JSON.stringify(formatObject)}`);
-  let structure = formatObject.structure;
-  log(`Structure from blah(): ${JSON.stringify(structure)}`);
-  let templatedFileNames = grabValueOfKeyFromObject(
-    preferredFileStructure,
-    structure
-  );
-  log(`${chalk.green("tfn from blah()")}: ${templatedFileNames}`);
-}
 function generator(
   components: Array<string>,
   fileStructure: string = "solo-test-lazy"
 ) {
   components.map(c => {
     let dir = createDirectory(c);
-    log(`Dir: ${dir}`);
     try {
       let files: Array<string> = createFiles(fileStructure, c, dir);
-      log(`files in generator: ${files}`);
       return files;
     } catch (error) {
       console.error(
@@ -61,18 +33,20 @@ function generator(
     }
   });
 }
+
 function createDirectory(component: string) {
   mkdirp(component, err => {
     err
-      ? console.error(`Failed to createDirectory. ${err}`)
+      ? console.error(`${chalk.red("Failed to createDirectory()")}: ${err}`)
       : log(`${component}`);
   });
   return component;
 }
+
 function createFile(component: string) {
   fs.writeFile(component, "", "utf-8", error => {
     error
-      ? console.error(`createFile() failed. ${error}`)
+      ? console.error(`${chalk.red("createFile() failed.")}:  ${error}`)
       : log(`${component} was created`);
   });
 }
@@ -87,12 +61,11 @@ function createFiles(preferredFileStructure, component, directory) {
       let here = path.join(process.cwd(), directory, file);
       createFile(here);
     });
-    log(`files in createFiles: ${files}`);
     return createdFiles;
   } else {
-    console.log(
+    console.error(
       `${chalk.red(
-        "templatedFileNames isn't defined. Current value: "
+        "templatedFileNames is falsey. Current value: "
       )} ${templatedFileNames}`
     );
     return false;
@@ -113,6 +86,5 @@ module.exports = {
   generator,
   createDirectory,
   createFile,
-  createFiles,
-  blah
+  createFiles
 };

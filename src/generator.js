@@ -50,8 +50,8 @@ function createFile(component: string) {
       : log(`${component} was created`);
   });
 }
-
 function createFiles(preferredFileStructure, component, directory) {
+  let directoryInQuestion = path.join(__dirname, directory);
   let templatedFileNames = getTemplatedFileNames(preferredFileStructure);
   let createdFiles: Array<string> = [];
   if (templatedFileNames) {
@@ -81,10 +81,21 @@ function grabValueOfKeyFromObject(
     }
   }
 }
+function deleteFiles(directory) {
+  fs.readdir(directory, (err, files) => {
+    if (err) throw error;
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw error;
+      });
+    }
+  });
+}
 
 module.exports = {
   generator,
   createDirectory,
   createFile,
-  createFiles
+  createFiles,
+  deleteFiles
 };

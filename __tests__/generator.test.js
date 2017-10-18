@@ -1,10 +1,11 @@
 test("createFiles should return 3 files", () => {
-  const { createFiles } = require("../dist/generator");
+  const { createFiles, blah } = require("../dist/generator");
   let component = "Foo";
   let structure = "solo-test-lazy";
   let expectedFiles = ["Foo.js", "Foo.test.js", "index.js"];
   let directory = "deleteMe";
-  let createdFiles = createFiles(expectedFiles, component, directory);
+  let createdFiles = createFiles(structure, component, directory);
+  blah();
   expect(createdFiles).toBe(expectedFiles);
 });
 

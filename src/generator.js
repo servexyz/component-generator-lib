@@ -37,11 +37,12 @@ function createFile(component: string) {
       : log(`${component} was created`);
   });
 }
+
 function createFiles(preferredFileStructure, component, directory) {
   var formatConfig: string = path.join(__dirname, "/format.json");
   var formatObject: Object = require(formatConfig);
-  var structure: Array<string> = formatObject.structure;
-
+  var structure: mixed = formatObject.structure;
+  //problem is line below... templatedFileNames is undefined
   let templatedFileNames = grabValueOfKeyFromObject(
     preferredFileStructure,
     structure

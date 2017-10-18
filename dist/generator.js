@@ -34,7 +34,6 @@ function createFiles(preferredFileStructure, component, directory) {
   var formatConfig = path.join(__dirname, "/format.json");
   var formatObject = require(formatConfig);
   var structure = formatObject.structure;
-
   let templatedFileNames = grabValueOfKeyFromObject(preferredFileStructure, structure);
   log(`\n\nTemplatedFileNames: ${templatedFileNames}`);
   log("\n\nStructure: " + JSON.stringify(structure));

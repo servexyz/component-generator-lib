@@ -79,13 +79,16 @@ function createFile(component: string) {
 
 function createFiles(preferredFileStructure, component, directory) {
   let templatedFileNames = getTemplatedFileNames(preferredFileStructure);
+  let createdFiles: Array<string> = [];
   if (templatedFileNames) {
     let files = templatedFileNames.map(tfn => {
       let file = tfn.replace(/([A-Z])\w+/, component);
+      createdFiles.push(file);
       let here = path.join(process.cwd(), directory, file);
       createFile(here);
     });
-    return files;
+    log(`files in createFiles: ${files}`);
+    return createdFiles;
   } else {
     console.log(
       `${chalk.red(

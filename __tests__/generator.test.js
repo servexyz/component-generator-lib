@@ -1,3 +1,5 @@
+const log = console.log;
+
 test("createFiles should return 3 files", () => {
   const { createFiles, blah } = require("../dist/generator");
   let component = "Foo";
@@ -5,6 +7,7 @@ test("createFiles should return 3 files", () => {
   let expectedFiles = ["Foo.js", "Foo.test.js", "index.js"];
   let directory = "deleteMe";
   let createdFiles = createFiles(structure, component, directory);
+  log(`Created files: ${createdFiles}`);
   blah();
   expect(createdFiles).toBe(expectedFiles);
 });

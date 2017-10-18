@@ -6,6 +6,33 @@ const path = require("path");
 const chalk = require("chalk");
 const log = console.log;
 
+function getTemplatedFileNames(preferredFileStructure = "solo-test-lazy") {
+  log(`Dirname: ${__dirname}`);
+  log(`Filename: ${__filename}`);
+  log(`${chalk.blue("preferredFileStructure in gtfn()")}': ${preferredFileStructure}`);
+  let formatConfig = path.join(__dirname, "../format.json");
+  log(`Format config in getTFN: ${formatConfig}`);
+  let formatObject = require(formatConfig);
+  let structure = formatObject.structure;
+  log(`Structure from getTemplatedFileNames: ${JSON.stringify(structure)}`);
+  let templatedFileNames = grabValueOfKeyFromObject(preferredFileStructure, structure);
+  log(`tfn from getTemplatedFileNames: ${templatedFileNames}`);
+  return templatedFileNames;
+}
+
+function blah() {
+  let preferredFileStructure = "solo-test-lazy";
+  let formatConfig = path.join(__dirname, "../format.json");
+  log(`Format config in blah: ${formatConfig}`);
+  log(`Dirname: ${__dirname}`);
+  log(`Filename: ${__filename}`);
+  let formatObject = require(formatConfig);
+  // log(`${chalk.green("formatConfig")}: ${JSON.stringify(formatObject)}`);
+  let structure = formatObject.structure;
+  log(`Structure from blah(): ${JSON.stringify(structure)}`);
+  let templatedFileNames = grabValueOfKeyFromObject(preferredFileStructure, structure);
+  log(`${chalk.green("tfn from blah()")}: ${templatedFileNames}`);
+}
 function generator(components, fileStructure = "solo-test-lazy") {
   components.map(c => {
     let dir = createDirectory(c);
@@ -30,27 +57,24 @@ function createFile(component) {
     error ? console.error(`createFile() failed. ${error}`) : log(`${component} was created`);
   });
 }
-function createFiles(preferredFileStructure, component, directory) {
-  var formatConfig = path.join(__dirname, "/format.json");
-  var formatObject = require(formatConfig);
-  var structure = formatObject.structure;
 
-  let templatedFileNames = grabValueOfKeyFromObject(preferredFileStructure, structure);
-  log(`\n\nTemplatedFileNames: ${templatedFileNames}`);
-  log("\n\nStructure: " + JSON.stringify(structure));
+function createFiles(preferredFileStructure, component, directory) {
+  let templatedFileNames = getTemplatedFileNames(preferredFileStructure);
+  let createdFiles = [];
   if (templatedFileNames) {
     let files = templatedFileNames.map(tfn => {
       let file = tfn.replace(/([A-Z])\w+/, component);
+      createdFiles.push(file);
       let here = path.join(process.cwd(), directory, file);
       createFile(here);
     });
-    return files;
+    log(`files in createFiles: ${files}`);
+    return createdFiles;
   } else {
     console.log(`${chalk.red("templatedFileNames isn't defined. Current value: ")} ${templatedFileNames}`);
     return false;
   }
 }
-
 function grabValueOfKeyFromObject(key, obj) {
   for (const [k, v] of Object.entries(obj)) {
     if (k == key) {
@@ -63,5 +87,6 @@ module.exports = {
   generator,
   createDirectory,
   createFile,
-  createFiles
+  createFiles,
+  blah
 };

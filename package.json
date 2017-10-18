@@ -21,6 +21,6 @@
   },
   "jest": {
     "verbose": true,
-    "bail": false
+    "bail": true
   }
 }

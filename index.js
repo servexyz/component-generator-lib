@@ -1,3 +1,9 @@
-const { generator } = require("./dist/generator");
+const { generator, createDirectory, createFile, createFiles, deleteFiles } = require("./dist/generator");
 
-module.exports = generator;
+module.exports = {
+  generator,
+  createDirectory,
+  createFile,
+  createFiles,
+  deleteFiles
+}

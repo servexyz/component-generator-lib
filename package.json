@@ -1,7 +1,7 @@
 {
   "name": "component-generator-lib",
   "version": "1.0.3",
-  "main": "index.js",
+  "main": "dist/generator.js",
   "license": "MIT",
   "scripts": {
     "start": "npm run build && npm run test",
